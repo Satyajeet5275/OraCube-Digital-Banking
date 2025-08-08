@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OraCube - Admin Dashboard</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <script>
+      if (sessionStorage.getItem("isAdminLoggedIn") !== "true") {
+        console.log("Login Status (check):", sessionStorage.getItem("isAdminLoggedIn"));
+        window.location.href = "admin-login.html";
+      }
+    </script>
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="admin-dashboard.css" />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+      <div class="loader-content">
+        <div class="loader-spinner"></div>
+        <h3 class="loading-text">Loading Oracube Banking Dashboard...</h3>
+      </div>
+    </div>
+
+    <!-- Animated Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="admin-container">
+      <nav class="sidebar glass-strong" id="sidebar">
+        <div class="sidebar-header">
+          <div class="admin-logo">
+            <i class="fas fa-crown"></i>
+          </div>
+          <div class="admin-title">Oracube Digital Banking</div>
+        </div>
+
+        <ul class="nav-menu">
+          <li class="nav-item">
+            <a class="nav-link active" onclick="showSection('dashboard')">
+              <span class="nav-icon"><i class="fas fa-chart-pie"></i></span>
+              Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="showSection('requests')">
+              <span class="nav-icon"
+                ><i class="fas fa-clipboard-list"></i
+              ></span>
+              Account Requests
+              <span class="badge" id="pendingCountBadge">3</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="showSection('customers')">
+              <span class="nav-icon"><i class="fas fa-users"></i></span>
+              All Customers
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="showSection('transactions')">
+              <span class="nav-icon"><i class="fas fa-credit-card"></i></span>
+              Transactions
+              <div class="notification-dot"></div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="showSection('reports')">
+              <span class="nav-icon"><i class="fas fa-chart-line"></i></span>
+              Reports & Analytics
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" onclick="showSection('settings')">
+              <span class="nav-icon"><i class="fas fa-cog"></i></span>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="main-content">
+        <div class="top-bar glass">
+          <div class="welcome-text">
+            <i class="fas fa-hand-wave icon-with-margin"></i>
+            Welcome back, Admin
+          </div>
+          <div class="admin-actions">
+            <!-- <button class="action-btn">
+              <i class="fas fa-bell"></i> Notifications
+            </button>
+            <button class="action-btn">
+              <i class="fas fa-user-circle"></i> Profile
+            </button> -->
+            <button class="action-btn">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-title">Total Customers</div>
+                <div class="stat-icon stat-icon-blue">
+                  <i class="fas fa-users"></i>
+                </div>
+              </div>
+              <div class="stat-value" id="customerCount">2,847</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-title">Pending Requests</div>
+                <div class="stat-icon stat-icon-orange">
+                  <i class="fas fa-clipboard-list"></i>
+                </div>
+              </div>
+              <div class="stat-value" id="pendingCount">23</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-title">Daily Transactions</div>
+                <div class="stat-icon stat-icon-green">
+                  <i class="fas fa-exchange-alt"></i>
+                </div>
+              </div>
+              <div class="stat-value">1</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <div class="stat-title">Total Volume</div>
+                <div class="stat-icon stat-icon-purple">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+              </div>
+              <div class="stat-value">₹5000</div>
+              <!-- <div class="stat-change positive">
+                            <i class="fas fa-arrow-up"></i> +18.3% from last week
+                        </div> -->
+            </div>
+          </div>
+
+          <div class="section-card glass">
+            <div class="section-header">
+              <h2 class="section-title">
+                <i class="fas fa-clock icon-with-margin"></i>
+                Recent Activity
+              </h2>
+              <button class="action-btn">
+                <i class="fas fa-eye"></i> View All
+              </button>
+            </div>
+            <div id="recentActivity">
+              <!-- Recent activities will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Account Requests Section -->
+        <div id="requests" class="content-section">
+          <div class="section-card glass">
+            <div class="section-header">
+              <h2 class="section-title">
+                <i class="fas fa-user-plus icon-with-margin"></i>
+                Account Opening Requests
+              </h2>
+              <div class="admin-actions">
+                <!-- <button class="action-btn">
+                  <i class="fas fa-envelope"></i> Bulk Actions
+                </button> -->
+                <button class="action-btn">
+                  <i class="fas fa-download"></i> Export
+                </button>
+              </div>
+            </div>
+
+            <div class="search-filter">
+              <input
+                type="text"
+                class="search-input"
+                placeholder="🔍 Search by name, email, or ID..."
+                id="requestSearch"
+              />
+              <select class="filter-select" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+              <select class="filter-select" id="typeFilter">
+                <option value="">All Types</option>
+                <option value="savings">Savings Account</option>
+                <option value="current">Current Account</option>
+                <option value="premium">Premium Account</option>
+              </select>
+            </div>
+
+            <table class="requests-table">
+              <thead>
+                <tr>
+                  <th>Applicant</th>
+                  <th>Account Type</th>
+                  <th>Submitted</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="requestsTableBody">
+                <!-- Requests will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Customers Section -->
+        <div id="customers" class="content-section">
+          <div class="section-card glass">
+            <div class="section-header">
+              <h2 class="section-title">
+                <i class="fas fa-address-book icon-with-margin"></i>
+                Customer Management
+              </h2>
+              <div class="admin-actions">
+                <button class="action-btn">
+                  <i class="fas fa-user-plus"></i> Add Customer
+                </button>
+                <button class="action-btn">
+                  <i class="fas fa-download"></i> Export List
+                </button>
+              </div>
+            </div>
+
+            <div class="search-filter">
+              <input
+                type="text"
+                class="search-input"
+                placeholder="🔍 Search customers..."
+                id="customerSearch"
+              />
+              <select class="filter-select" id="customerFilter">
+                <option value="">All Customers</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+                <option value="vip">VIP</option>
+              </select>
+            </div>
+
+            <div id="customersList">
+              <!-- Customer list will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Transactions Section -->
+        <div id="transactions" class="content-section">
+          <div class="section-card glass">
+            <div class="section-header">
+              <h2 class="section-title">
+                <i class="fas fa-chart-bar icon-with-margin"></i>
+                Transaction Monitor
+              </h2>
+              <div class="admin-actions">
+                <button class="action-btn">
+                  <i class="fas fa-search-plus"></i> Advanced Search
+                </button>
+                <button class="action-btn">
+                  <i class="fas fa-analytics"></i> Analytics
+                </button>
+              </div>
+            </div>
+
+            <div class="search-filter">
+              <input
+                type="text"
+                class="search-input"
+                placeholder="🔍 Search transactions..."
+                id="transactionSearch"
+              />
+              <select class="filter-select" id="transactionTypeFilter">
+                <option value="">All Types</option>
+                <option value="transfer">Transfers</option>
+                <option value="deposit">Deposits</option>
+                <option value="withdrawal">Withdrawals</option>
+              </select>
+              <input type="date" class="filter-select" id="transactionDate" />
+            </div>
+
+            <div id="transactionsList">
+              <!-- Transaction list will be loaded here -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div id="reports" class="content-section">
+          <div class="section-card glass">
+            <div class="section-header">
+              <h2 class="section-title">
+                <i class="fas fa-chart-pie icon-with-margin"></i>
+                Reports & Analytics
+              </h2>
+              <button class="action-btn">
+                <i class="fas fa-file-alt"></i> Generate Report
+              </button>
+            </div>
+
+            <canvas
+              id="accountTypeChart"
+              style="max-height: 300px; margin-bottom: 40px"
+            ></canvas>
+            <canvas id="dailyOpeningsChart" style="max-height: 300px"></canvas>
+          </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div id="settings" class="content-section">
+          <div class="section-card glass">
+            <div class="section-header">
+              <h2 class="section-title">
+                <i class="fas fa-cogs icon-with-margin"></i>
+                System Settings
+              </h2>
+              <button class="action-btn">
+                <i class="fas fa-save"></i> Save Changes
+              </button>
+            </div>
+
+            <div class="empty-section-container">
+              <i class="fas fa-tools large-icon"></i>
+              <p class="section-description">
+                System configuration, user management, security settings, and
+                administrative controls will be available here.
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="Database1.js"></script>
+    <script src="admin-dashboard.js"></script>
+
+    <!-- Fallback to ensure dashboard loads -->
+    <script>
+      // Fallback timer to ensure loader is hidden
+      setTimeout(function () {
+        const loader = document.getElementById("loader");
+        if (loader) {
+          loader.style.display = "none";
+          loader.style.opacity = "0";
+          loader.style.visibility = "hidden";
+        }
+
+        // Ensure admin container is visible
+        const adminContainer = document.querySelector(".admin-container");
+        if (adminContainer) {
+          adminContainer.style.opacity = "1";
+          adminContainer.style.visibility = "visible";
+        }
+      }, 3000); // Fallback after 3 seconds
+    </script>
+  </body>
+</html>

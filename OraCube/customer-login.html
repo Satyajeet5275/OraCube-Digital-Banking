@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OraCube - Customer Login</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="customer-login.css">
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation" id="bg-animation"></div>
+
+    <!-- Header -->
+    <header class="customer-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="customer-logo">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>OraCube Banking</h1>
+                    <span>Customer Portal</span>
+                </div>
+            </div>
+            <a href="home.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="customer-container">
+        <div class="login-section">
+            <!-- Customer Login Card -->
+            <div class="customer-login-card">
+                <div class="card-header">
+                    <div class="customer-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <h2>Customer Access</h2>
+                    <p>Secure login for personal banking</p>
+                </div>
+
+                <form id="customerLoginForm" class="customer-form">
+                    <div class="form-group">
+                        <label for="customerId">Customer ID</label>
+                        <div class="input-container">
+                            <input type="text" id="customerId" name="customerId" required autocomplete="username">
+                            <i class="fas fa-user input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="customerPassword">Password</label>
+                        <div class="input-container">
+                            <input type="password" id="customerPassword" name="customerPassword" required autocomplete="current-password">
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="toggle-password" tabindex="-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="security-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="rememberDevice" checked>
+                            <label for="rememberDevice">
+                                <span class="checkmark"></span>
+                                Remember this device
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="customer-login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Access Customer Portal
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <div class="security-notice">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Your account is protected by advanced security measures.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Features Panel -->
+        <div class="security-panel">
+            <div class="security-header">
+                <h3>
+                    <i class="fas fa-shield-check"></i>
+                    Security Features
+                </h3>
+            </div>
+
+            <div class="security-features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>256-bit Encryption</h4>
+                        <p>Bank-grade security for all transactions</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Two-Factor Authentication</h4>
+                        <p>Extra layer of account protection</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Real-time Monitoring</h4>
+                        <p>24/7 fraud detection and prevention</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Activity Tracking</h4>
+                        <p>Complete audit trail of all actions</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-secret"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Privacy Protection</h4>
+                        <p>Your data remains confidential</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Session Management</h4>
+                        <p>Automatic logout for security</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div class="modal-overlay" id="customerOtpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-shield-check"></i>
+                    OTP Verification
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="verification-icon">
+                    <i class="fas fa-envelope-open-text"></i>
+                </div>
+                <p>We've sent a 6-digit verification code to your registered email address</p>
+                
+                <div class="otp-input-container">
+                    <input type="text" class="otp-input" maxlength="1" data-index="0">
+                    <input type="text" class="otp-input" maxlength="1" data-index="1">
+                    <input type="text" class="otp-input" maxlength="1" data-index="2">
+                    <input type="text" class="otp-input" maxlength="1" data-index="3">
+                    <input type="text" class="otp-input" maxlength="1" data-index="4">
+                    <input type="text" class="otp-input" maxlength="1" data-index="5">
+                </div>
+                
+                <div class="verification-timer">
+                    <i class="fas fa-clock"></i>
+                    <span>Resend OTP in: </span>
+                    <span class="timer-display" id="customerOtpTimer">05:00</span>
+                </div>
+                
+                <div class="otp-actions">
+                    <button type="button" class="resend-otp-btn" id="customerResendOtp" disabled>
+                        <i class="fas fa-redo"></i> Resend OTP
+                    </button>
+                    <button type="button" class="verify-customer-btn" id="customerVerifyOtp">
+                        <i class="fas fa-check"></i> Verify OTP
+                    </button>
+                </div>
+                
+                <div class="modal-footer">
+                    <p><i class="fas fa-info-circle"></i> Didn't receive the code? Check your spam folder or try resending.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-Factor Authentication Modal -->
+    <div class="modal-overlay" id="customerTwoFactorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-mobile-alt"></i>
+                    Customer Verification
+                </h3>
+                <button class="close-btn" onclick="closeCustomerTwoFactorModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="verification-icon">
+                    <i class="fas fa-sms"></i>
+                </div>
+                <p>Please enter the 6-digit verification code sent to your registered mobile number</p>
+                
+                <div class="otp-input-container">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleCustomerOtpInput(this, 0)" onkeydown="handleCustomerOtpKeydown(event, 0)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleCustomerOtpInput(this, 1)" onkeydown="handleCustomerOtpKeydown(event, 1)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleCustomerOtpInput(this, 2)" onkeydown="handleCustomerOtpKeydown(event, 2)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleCustomerOtpInput(this, 3)" onkeydown="handleCustomerOtpKeydown(event, 3)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleCustomerOtpInput(this, 4)" onkeydown="handleCustomerOtpKeydown(event, 4)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleCustomerOtpInput(this, 5)" onkeydown="handleCustomerOtpKeydown(event, 5)">
+                </div>
+                
+                <div class="verification-timer">
+                    <span>Code expires in <span id="customerOtpTimer">180</span> seconds</span>
+                    <button class="resend-otp-btn" id="customerResendBtn" onclick="resendCustomerOtp()" style="display: none;">
+                        <i class="fas fa-redo"></i>
+                        Resend Code
+                    </button>
+                </div>
+                
+                <button class="verify-customer-btn" onclick="verifyCustomerTwoFactor()">
+                    <i class="fas fa-check-circle"></i>
+                    Verify & Access
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="customerSuccessModal">
+        <div class="modal-content success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Access Granted</h3>
+            <p>Welcome to your Customer Portal</p>
+            <div class="customer-details">
+                <div class="detail-item">
+                    <i class="fas fa-user"></i>
+                    <span>Customer Portal Access</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-shield-check"></i>
+                    <span>Secure Session Active</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Last Login: Just Now</span>
+                </div>
+            </div>
+            <button class="access-dashboard-btn" onclick="redirectToCustomerDashboard()">
+                <i class="fas fa-tachometer-alt"></i>
+                Access Dashboard
+            </button>
+        </div>
+    </div>
+
+    <script src="Database.js"></script>
+    <script src="customer-login.js"></script>
+</body>
+</html>

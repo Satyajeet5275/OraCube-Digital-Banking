@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OraCube - Customer Dashboard</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="customer-dashboard.css">
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h3 class="loading-text">Loading Your Dashboard...</h3>
+        </div>
+    </div>
+
+    <!-- Animated Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="customer-container">
+        <nav class="sidebar glass-strong" id="sidebar">
+            <div class="sidebar-header">
+                <div class="customer-logo">
+                    <i class="fas fa-university"></i>
+                </div>
+                <div class="customer-title">OraCube Banking</div>
+                <div class="customer-subtitle">Digital Banking Excellence</div>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a class="nav-link active" onclick="showSection('dashboard')">
+                        <span class="nav-icon"><i class="fas fa-tachometer-alt"></i></span>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('accounts')">
+                        <span class="nav-icon"><i class="fas fa-piggy-bank"></i></span>
+                        My Account
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('update-details')">
+                        <span class="nav-icon"><i class="fas fa-edit"></i></span>
+                        Update Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('cards')">
+                        <span class="nav-icon"><i class="fas fa-credit-card"></i></span>
+                        Cards & Payments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('managePayees')">
+                        <span class="nav-icon"><i class="fas fa-users"></i></span>
+                        Manage Payees
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('transfer')">
+                        <span class="nav-icon"><i class="fas fa-exchange-alt"></i></span>
+                        Transfer Money
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('miniStatement')">
+                        <span class="nav-icon"><i class="fas fa-file-invoice"></i></span>
+                        Statements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('support')">
+                        <span class="nav-icon"><i class="fas fa-headset"></i></span>
+                        Support
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" onclick="showSection('profile')">
+                        <span class="nav-icon"><i class="fas fa-user-cog"></i></span>
+                        Profile Settings
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link logout-nav-link" onclick="customerLogout()">
+                        <span class="nav-icon"><i class="fas fa-sign-out-alt"></i></span>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <main class="main-content">
+            <div class="top-bar glass">
+                <div class="welcome-text">
+                    <i class="fas fa-sun icon-with-margin"></i>
+                    Good morning, John!
+                </div>
+                <div class="customer-actions">
+                    <button class="action-btn" onclick="showQuickPay()">
+                        <i class="fas fa-bolt"></i> Quick Pay
+                    </button>
+                    <button class="action-btn" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </button>
+                    <button class="action-btn" onclick="showProfile()">
+                        <i class="fas fa-user-circle"></i> Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="content-section active">
+                <div class="section-card glass">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-user-circle icon-with-margin"></i>
+                            Customer Profile
+                        </h2>
+                        <button class="action-btn" onclick="editProfile()">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                    </div>
+
+                    <div class="profile-overview">
+                        <div class="profile-card glass">
+                            <div class="profile-header">
+                                <div class="profile-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="profile-basic">
+                                    <h3 id="customerFullName">John Smith</h3>
+                                    <p id="customerEmail">john.smith@email.com</p>
+                                    <span class="status-badge status-active">Active Customer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-details-grid">
+                        <div class="detail-section glass">
+                            <h4><i class="fas fa-id-card icon-with-margin"></i>Personal Information</h4>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="label">Customer ID:</span>
+                                    <span class="value customer-id" id="customerID">CUST2024001</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Account Request ID:</span>
+                                    <span class="value" id="accountRequestID">REQ2024001</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Title:</span>
+                                    <span class="value" id="customerTitle">Mr.</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">First Name:</span>
+                                    <span class="value" id="firstName">John</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Middle Name:</span>
+                                    <span class="value" id="middleName">David</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Last Name:</span>
+                                    <span class="value" id="lastName">Smith</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Date of Birth:</span>
+                                    <span class="value" id="customerDOB">1985-03-15</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section glass">
+                            <h4><i class="fas fa-phone icon-with-margin"></i>Contact Information</h4>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="label">Mobile Number:</span>
+                                    <span class="value contact-info" id="mobileNumber">+91 98765 43210</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Email Address:</span>
+                                    <span class="value contact-info" id="emailAddress">john.smith@email.com</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Residential Address:</span>
+                                    <span class="value address-info" id="residentialAddress">123 Main Street, Mumbai,
+                                        Maharashtra 400001</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Permanent Address:</span>
+                                    <span class="value address-info" id="permanentAddress">123 Main Street, Mumbai,
+                                        Maharashtra 400001</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section glass identification-section">
+                            <h4><i class="fas fa-id-badge icon-with-margin"></i>Identification & Documentation</h4>
+                            <div class="identification-cards">
+                                <div class="id-card aadhar-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-id-card"></i>
+                                        <span>Aadhar Card</span>
+                                    </div>
+                                    <div class="card-number" id="aadharNumber">****-****-1234</div>
+                                    <div class="card-status verified">
+                                        <i class="fas fa-check-circle"></i>
+                                        Verified
+                                    </div>
+                                </div>
+
+                                <div class="id-card pan-card">
+                                    <div class="card-header">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>PAN Card</span>
+                                    </div>
+                                    <div class="card-number" id="panNumber">ABCDE****F</div>
+                                    <div class="card-status verified">
+                                        <i class="fas fa-check-circle"></i>
+                                        Verified
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section glass">
+                            <h4><i class="fas fa-briefcase icon-with-margin"></i>Financial Information</h4>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="label">Occupation:</span>
+                                    <span class="value" id="occupation">Software Engineer</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Annual Income:</span>
+                                    <span class="value financial-info" id="annualIncome">₹7,50,000</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Account Type:</span>
+                                    <span class="value" id="accountType">Premium Savings</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Application Date:</span>
+                                    <span class="value" id="applicationDate">2024-07-15</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Account Section -->
+            <div id="accounts" class="content-section">
+                <div class="section-card glass">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-university icon-with-margin"></i>
+                            My Account
+                        </h2>
+                        <button class="action-btn" onclick="refreshAccountInfo()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+
+                    <div class="account-overview">
+                        <div class="balance-card glass">
+                            <div class="balance-header">
+                                <h3>Account Balance</h3>
+                                <button class="toggle-balance" onclick="toggleBalanceVisibility()">
+                                    <i class="fas fa-eye" id="balanceToggleIcon"></i>
+                                </button>
+                            </div>
+                            <div class="balance-amount" id="accountBalance">₹12,84,793</div>
+                            <div class="balance-change positive">
+                                <i class="fas fa-arrow-up"></i> +2.3% this month
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="account-details-grid">
+                        <div class="detail-section glass">
+                            <h4><i class="fas fa-university icon-with-margin"></i>Account Information</h4>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="label">Account Number:</span>
+                                    <span class="value account-number-display"
+                                        id="accountNumber">1234-5678-9012-7892</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Account Type:</span>
+                                    <span class="value" id="accountTypeDisplay">Premium Savings</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Application Date:</span>
+                                    <span class="value" id="accountApplicationDate">2024-07-15</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Account Status:</span>
+                                    <span class="value">
+                                        <span class="status-badge status-active" id="accountStatus">Active</span>
+                                    </span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">Current Balance:</span>
+                                    <span class="value account-balance-display" id="currentBalance">₹12,84,793</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="label">IFSC Code:</span>
+                                    <span class="value" id="ifscCode">ORAC0001234</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section glass">
+                            <h4><i class="fas fa-shield-alt icon-with-margin"></i>Security & Features</h4>
+                            <div class="account-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>Mobile Banking Enabled</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-shield-check"></i>
+                                    <span>Two-Factor Authentication</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-bell"></i>
+                                    <span>SMS & Email Alerts</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-lock"></i>
+                                    <span>Secure Transactions</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Investment Options</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-headset"></i>
+                                    <span>24/7 Customer Support</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update Details Section -->
+            <div id="update-details" class="content-section">
+                <div class="section-card glass">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-edit icon-with-margin"></i>
+                            Update Details
+                        </h2>
+                        <div class="security-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Secure Update</span>
+                        </div>
+                    </div>
+
+                    <div class="update-cards-grid">
+                        <!-- Reset Password Card -->
+                        <div class="update-card glass password-card">
+                            <div class="update-card-header">
+                                <h3><i class="fas fa-key icon-with-margin"></i>Reset Password</h3>
+                                <span class="update-status secure">OTP Required</span>
+                            </div>
+                            <div class="update-fields">
+                                <div class="password-options">
+                                    <div class="password-option">
+                                        <button class="password-reset-btn login-password"
+                                            onclick="openPasswordResetModal('loginPassword')">
+                                            <div class="password-btn-content">
+                                                <i class="fas fa-user-lock"></i>
+                                                <div class="password-btn-text">
+                                                    <h4>Reset Login Password</h4>
+                                                    <p>Change your account login password</p>
+                                                </div>
+                                            </div>
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="password-option">
+                                        <button class="password-reset-btn transaction-password"
+                                            onclick="openTransactionPasswordResetModal('transactionPassword')">
+                                            <div class="password-btn-content">
+                                                <i class="fas fa-shield-alt"></i>
+                                                <div class="password-btn-text">
+                                                    <h4>Reset Transaction Password</h4>
+                                                    <p>Change your transaction security password</p>
+                                                </div>
+                                            </div>
+                                            <i class="fas fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information Card -->
+                        <div class="update-card glass">
+                            <div class="update-card-header">
+                                <h3><i class="fas fa-user icon-with-margin"></i>Personal Information</h3>
+                                <span class="update-status">Editable</span>
+                            </div>
+                            <div class="update-fields">
+                                <div class="field-item editable" data-field="title">
+                                    <span class="field-label">Title</span>
+                                    <span class="field-value" id="edit-title">Mr.</span>
+                                    <button class="edit-btn" onclick="openEditModal('title', 'Title')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="firstName">
+                                    <span class="field-label">First Name</span>
+                                    <span class="field-value" id="edit-firstName">John</span>
+                                    <button class="edit-btn" onclick="openEditModal('firstName', 'First Name')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="middleName">
+                                    <span class="field-label">Middle Name</span>
+                                    <span class="field-value" id="edit-middleName">David</span>
+                                    <button class="edit-btn" onclick="openEditModal('middleName', 'Middle Name')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="lastName">
+                                    <span class="field-label">Last Name</span>
+                                    <span class="field-value" id="edit-lastName">Smith</span>
+                                    <button class="edit-btn" onclick="openEditModal('lastName', 'Last Name')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item locked" data-field="dob">
+                                    <span class="field-label">Date of Birth</span>
+                                    <span class="field-value" id="edit-dob">1985-03-15</span>
+                                    <div class="locked-badge">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Protected</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information Card -->
+                        <div class="update-card glass">
+                            <div class="update-card-header">
+                                <h3><i class="fas fa-phone icon-with-margin"></i>Contact Information</h3>
+                                <span class="update-status editable">Editable</span>
+                            </div>
+                            <div class="update-fields">
+                                <div class="field-item editable" data-field="mobile">
+                                    <span class="field-label">Mobile Number</span>
+                                    <span class="field-value" id="edit-mobile">+91 98765 43210</span>
+                                    <button class="edit-btn" onclick="openEditModal('mobile', 'Mobile Number')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="email">
+                                    <span class="field-label">Email Address</span>
+                                    <span class="field-value" id="edit-email">john.smith@email.com</span>
+                                    <button class="edit-btn" onclick="openEditModal('email', 'Email Address')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="residential">
+                                    <span class="field-label">Residential Address</span>
+                                    <span class="field-value" id="edit-residential">123 Main Street, Mumbai, Maharashtra
+                                        400001</span>
+                                    <button class="edit-btn"
+                                        onclick="openEditModal('residential', 'Residential Address')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="permanent">
+                                    <span class="field-label">Permanent Address</span>
+                                    <span class="field-value" id="edit-permanent">123 Main Street, Mumbai, Maharashtra
+                                        400001</span>
+                                    <button class="edit-btn" onclick="openEditModal('permanent', 'Permanent Address')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financial Information Card -->
+                        <div class="update-card glass">
+                            <div class="update-card-header">
+                                <h3><i class="fas fa-briefcase icon-with-margin"></i>Financial Information</h3>
+                                <span class="update-status editable">Editable</span>
+                            </div>
+                            <div class="update-fields">
+                                <div class="field-item editable" data-field="occupation">
+                                    <span class="field-label">Occupation</span>
+                                    <span class="field-value" id="edit-occupation">Software Engineer</span>
+                                    <button class="edit-btn" onclick="openEditModal('occupation', 'Occupation')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="income">
+                                    <span class="field-label">Annual Income</span>
+                                    <span class="field-value" id="edit-income">₹7,50,000</span>
+                                    <button class="edit-btn" onclick="openEditModal('income', 'Annual Income')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Information Card (Locked) -->
+                        <div class="update-card glass locked-card">
+                            <div class="update-card-header">
+                                <h3><i class="fas fa-university icon-with-margin"></i>Account Information</h3>
+                                <span class="update-status locked">Protected</span>
+                            </div>
+                            <div class="update-fields">
+                                <div class="field-item locked" data-field="customerId">
+                                    <span class="field-label">Customer ID</span>
+                                    <span class="field-value" id="edit-customerId">CUST2024001</span>
+                                    <div class="locked-badge">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Protected</span>
+                                    </div>
+                                </div>
+                                <div class="field-item locked" data-field="accountNo">
+                                    <span class="field-label">Account Number</span>
+                                    <span class="field-value" id="edit-accountNo">1234-5678-9012-7892</span>
+                                    <div class="locked-badge">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Protected</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Account Settings Card (Editable) -->
+                        <div class="update-card glass">
+                            <div class="update-card-header">
+                                <h3><i class="fas fa-cog icon-with-margin"></i>Account Settings</h3>
+                                <span class="update-status editable">Editable</span>
+                            </div>
+                            <div class="update-fields">
+                                <div class="field-item editable" data-field="accountType">
+                                    <span class="field-label">Account Type</span>
+                                    <span class="field-value" id="edit-accountType">Savings</span>
+                                    <button class="edit-btn" onclick="openEditModal('accountType', 'Account Type')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                                <div class="field-item editable" data-field="status">
+                                    <span class="field-label">Account Status</span>
+                                    <span class="field-value" id="edit-status">Active</span>
+                                    <button class="edit-btn" onclick="openEditModal('status', 'Account Status')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Identification Documents Card (Locked) -->
+                        <div class="update-card glass locked-card">
+                            <div class="update-card-header">
+                                <h3><i class="fas fa-id-badge icon-with-margin"></i>Identification Documents</h3>
+                                <span class="update-status locked">Protected</span>
+                            </div>
+                            <div class="update-fields">
+                                <div class="field-item locked" data-field="aadhar">
+                                    <span class="field-label">Aadhar Number</span>
+                                    <span class="field-value" id="edit-aadhar">****-****-1234</span>
+                                    <div class="locked-badge">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Protected</span>
+                                    </div>
+                                </div>
+                                <div class="field-item locked" data-field="pan">
+                                    <span class="field-label">PAN Number</span>
+                                    <span class="field-value" id="edit-pan">ABCDE****F</span>
+                                    <div class="locked-badge">
+                                        <i class="fas fa-lock"></i>
+                                        <span>Protected</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Manage Payye-->
+            <div id="managePayees" class="content-section">
+                <div class="manage-payee-header">
+                    <span class="manage-payee-title"><i class="fas fa-users"></i> Manage Payees</span>
+                    <button id="showAddPayeeBtn" class="add-payee-btn" onclick="showAddPayeeForm()"><i
+                            class="fas fa-user-plus"></i> Add New
+                        Payee</button>
+                </div>
+                <form class="payee-form" id="addPayeeForm" onsubmit="addPayee(event)">
+                    <div class="payee-form-group">
+                        <label for="payeeName">Payee Name</label>
+                        <input type="text" id="payeeName" required placeholder="Enter payee name">
+                    </div>
+                    <div class="payee-form-group">
+                        <label for="payeeAccount">Account Number</label>
+                        <input type="text" id="payeeAccount" required placeholder="Account number">
+                    </div>
+                    <div class="payee-form-group">
+                        <label for="payeeBank">Bank Name</label>
+                        <input type="text" id="payeeBank" required placeholder="Bank name">
+                    </div>
+                    <div class="payee-form-group">
+                        <label for="payeeIFSC">IFSC Code</label>
+                        <input type="text" id="payeeIFSC" required placeholder="IFSC code">
+                    </div>
+                    <div class="payee-form-group">
+                        <label for="payeeNickname">Nickname</label>
+                        <input type="text" id="payeeNickname" required placeholder="Enter nickname">
+                    </div>
+                    <div class="payee-form-btn">
+                        <button type="submit"><i class="fas fa-plus"></i> Add Payee</button>
+                    </div>
+                </form>
+                <table class="payee-list-table" id="payeeListTable">
+                    <thead>
+                        <tr>
+                            <th>Payee Name</th>
+                            <th>Account Number</th>
+                            <th>Bank Name</th>
+                            <th>IFSC</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payeeListBody">
+                        <!-- Payees will be dynamically inserted here -->
+                    </tbody>
+                </table>
+                <!-- Payee Transfer Section -->
+                <div class="payee-transfer-section" style="margin-top:2.5rem;">
+                    <h2 style="color:var(--accent-primary,#1dbf73);font-size:1.25rem;margin-bottom:1.2rem;"><i
+                            class="fas fa-exchange-alt"></i> Transfer Funds to Payee</h2>
+                    <form id="payeeTransferForm"
+                        style="display:flex;flex-wrap:wrap;gap:1.2rem 2.2rem;align-items:flex-end;">
+                        <div style="flex:1 1 220px;min-width:180px;display:flex;flex-direction:column;">
+                            <label for="transferPayeeSelect" style="font-weight:600;margin-bottom:0.4rem;">Select
+                                Payee</label>
+                            <select id="transferPayeeSelect" required
+                                style="padding:0.7rem 1rem;border-radius:12px;font-size:1.08rem;font-weight:600;background:rgba(30,40,60,0.92);color:var(--text-primary,#f3f6fa);border:1.5px solid var(--border,#1dbf73);">
+                                <option value="">-- Select Payee --</option>
+                            </select>
+                        </div>
+                        <div style="flex:1 1 180px;min-width:150px;display:flex;flex-direction:column;">
+                            <label for="paymentMethod" style="font-weight:600;margin-bottom:0.4rem;">Payment
+                                Method</label>
+                            <select id="paymentMethod1" required
+                                style="padding:0.7rem 1rem;border-radius:12px;font-size:1.08rem;font-weight:600;background:rgba(30,40,60,0.92);color:var(--text-primary,#f3f6fa);border:1.5px solid var(--border,#1dbf73);">
+                                <option value="">-- Select Method --</option>
+                                <option value="IMPS">IMPS</option>
+                                <option value="NEFT">NEFT</option>
+                                <option value="RTGS">RTGS</option>
+                            </select>
+                        </div>
+                        <div style="flex:1 1 120px;min-width:100px;display:flex;flex-direction:column;">
+                            <label for="transferAmount" style="font-weight:600;margin-bottom:0.4rem;">Amount</label>
+                            <input type="number" id="transferAmount" min="1" step="0.01" required
+                                placeholder="Enter amount"
+                                style="padding:0.7rem 1rem;border-radius:12px;font-size:1.08rem;font-weight:600;background:rgba(30,40,60,0.92);color:var(--text-primary,#f3f6fa);border:1.5px solid var(--border,#1dbf73);">
+                        </div>
+                        <div style="flex:2 1 220px;min-width:180px;display:flex;flex-direction:column;">
+                            <label for="transferRemark" style="font-weight:600;margin-bottom:0.4rem;">Remark</label>
+                            <input type="text" id="transferRemark" maxlength="100" required
+                                placeholder="Remark (purpose)"
+                                style="padding:0.7rem 1rem;border-radius:12px;font-size:1.08rem;font-weight:600;background:rgba(30,40,60,0.92);color:var(--text-primary,#f3f6fa);border:1.5px solid var(--border,#1dbf73);">
+                        </div>
+                        <div
+                            style="flex:1 1 100%;display:flex;align-items:flex-end;justify-content:flex-end;margin-top:0.5rem;">
+                            <button id="transferBtn" type="submit"
+                                style="background:linear-gradient(90deg,var(--accent-primary,#1dbf73) 60%,var(--accent-secondary,#158f5c) 100%);color:#fff;font-weight:700;font-size:1.08rem;border-radius:14px;box-shadow:0 4px 18px 0 rgba(16,185,129,0.18);border:none;padding:0.6rem 1.4rem;letter-spacing:0.5px;cursor:pointer;transition:background 0.2s,box-shadow 0.2s,transform 0.15s,opacity 0.18s;"
+                                disabled>
+                                <i class="fas fa-paper-plane"></i> Transfer
+                            </button>
+                        </div>
+                    </form>
+                    <div id="transferMessage" style="margin-top:1.2rem;"></div>
+                </div>
+            </div>
+
+            <!-- Cards Section -->
+            <div id="cards" class="content-section">
+                <div class="section-card glass">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-credit-card icon-with-margin"></i>
+                            Cards & Payments
+                        </h2>
+                        <button class="action-btn" onclick="requestNewCard()">
+                            <i class="fas fa-plus"></i> Request Card
+                        </button>
+                    </div>
+
+                    <div class="cards-grid">
+                        <div class="credit-card glass">
+                            <div class="card-type">
+                                <i class="fab fa-cc-visa"></i>
+                                <span>Debit Card</span>
+                            </div>
+                            <div class="card-number">•••• •••• •••• 7892</div>
+                            <div class="card-holder">JOHN DOE</div>
+                            <div class="card-expiry">12/27</div>
+                            <div class="card-actions">
+                                <button class="card-action-btn" onclick="lockCard()">
+                                    <i class="fas fa-lock"></i> Lock
+                                </button>
+                                <button class="card-action-btn" onclick="cardSettings()">
+                                    <i class="fas fa-cog"></i> Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Fund-transfer-->
+            <div id="transfer" class="content-section">
+                <div class="section-card glass transfer-center-wrapper">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-exchange-alt icon-with-margin"></i>
+                            Transfer Money
+                        </h2>
+                    </div>
+                    <div class="transfer-tabs transfer-tabs-centered">
+                        <button class="tab-btn active" id="selfDepositTabBtn"
+                            onclick="showTransferTab('selfDeposit')">SELF DEPOSIT</button>
+                        <button class="tab-btn" id="payeeTransferTabBtn"
+                            onclick="showTransferTab('payeeTransfer')">PAYEE TRANSFER</button>
+                    </div>
+                    <div class="transfer-card-center-flex">
+                        <!-- SELF DEPOSIT TAB -->
+                        <div id="selfDepositTab" class="transfer-tab active">
+                            <div class="modern-transfer-panel self-deposit-panel fade-in-scale">
+                                <div class="panel-header">
+                                    <div class="icon-circle"
+                                        style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    <div>
+                                        <h3>Self Deposit</h3>
+                                        <span class="panel-desc">Add funds to your own account instantly</span>
+                                    </div>
+                                </div>
+                                <form class="transfer-form">
+                                    <div class="form-group">
+                                        <label for="selfDepositAmount">Amount</label>
+                                        <div class="amount-input modern-amount-input">
+                                            <span class="currency">₹</span>
+                                            <input type="text" id="selfDepositAmount"
+                                                class="form-control no-spinner inr-font" placeholder="₹ 0.00"
+                                                autocomplete="off" oninput="toggleDepositButtonState()">
+                                        </div>
+                                    </div>
+                                    <div class="form-group remark-group">
+                                        <label for="selfDepositRemark">Remark</label>
+                                        <div class="remark-input-wrapper">
+                                            <input type="text" id="selfDepositRemark" class="form-control"
+                                                placeholder="Enter remarks (required)" required
+                                                aria-describedby="remarkError">
+                                        </div>
+                                        <div id="remarkError" class="remark-error" style="display:none;"></div>
+                                    </div>
+                                    <button class="transfer-btn modern-btn" id="selfDepositBtn" type="button"
+                                        onclick="processSelfDeposit()" disabled>
+                                        <span class="btn-icon-text"><i class="fas fa-arrow-down"></i> Deposit</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- PAYEE TRANSFER TAB -->
+                        <div id="payeeTransferTab" class="transfer-tab" style="display:none;">
+                            <div class="modern-transfer-panel payee-transfer-panel fade-in-scale">
+                                <div class="panel-header">
+                                    <div class="icon-circle"
+                                        style="background: linear-gradient(135deg, var(--accent-secondary), var(--accent-primary));">
+                                        <i class="fas fa-user-friends"></i>
+                                    </div>
+                                    <div>
+                                        <h3>Payee Transfer</h3>
+                                        <span class="panel-desc">Send money to a saved payee securely</span>
+                                    </div>
+                                </div>
+                                <form class="transfer-form payee-form-grid">
+                                    <div class="form-group">
+                                        <label for="payeeSelect">Select Payee</label>
+                                        <select id="payeeSelect" class="form-control">
+                                            <option value="">-- Select Payee --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="paymentMethod">Payment Method</label>
+                                        <select id="paymentMethod" class="form-control">
+                                            <option value="" disabled selected>-- Select Method --</option>
+                                            <option>RTGS</option>
+                                            <option>NEFT</option>
+                                            <option>IMPS</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group payee-amount-remark-row">
+                                        <div class="amount-remark-flex">
+                                            <div class="amount-col">
+                                                <label for="payeeAmount">Amount</label>
+                                                <div class="amount-input modern-amount-input">
+                                                    <span class="currency">₹</span>
+                                                    <input type="text" id="payeeAmount"
+                                                        class="form-control no-spinner inr-font payee-amount-remark-input"
+                                                        placeholder="₹ 0.00" autocomplete="off"
+                                                        oninput="togglePayeeButtonState()">
+                                                </div>
+                                            </div>
+                                            <div class="remark-col remark-group">
+                                                <label for="payeeRemark">Remark</label>
+                                                <div class="remark-input-wrapper">
+                                                    <input type="text" id="payeeRemark"
+                                                        class="form-control payee-amount-remark-input"
+                                                        placeholder="Enter remarks (required)" required
+                                                        aria-describedby="payeeRemarkError">
+                                                </div>
+                                                <div id="payeeRemarkError" class="remark-error" style="display:none;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group payee-transfer-btn-col"
+                                        style="grid-column: 1 / span 2; margin-top: 0.2rem;">
+                                        <button class="transfer-btn modern-btn payee-transfer-btn-wide"
+                                            id="payeeTransferBtn" type="button" onclick="processPayeeTransfer()"
+                                            disabled>
+                                            <span class="btn-icon-text"><i class="fas fa-key"></i> Enter Password</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Statements Section -->
+            <div id="miniStatement" class="content-section">
+                <div class="section-card glass">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-wallet icon-with-margin"></i>
+                            Balance Details as on <span id="balanceDate"></span>
+                        </h2>
+                    </div>
+                    <div class="account-info">
+                        <div><strong>Account Number:</strong> <span id="accNum"></span>
+                        </div>
+                        <div><strong>Available Balance:</strong> <span id="availBal"></span></div>
+                        <!-- <div><strong>Cheques in Clearing:</strong> <span id="chequesClear">INR 0.00</span></div> -->
+                        <!-- <div><strong>Linked FD Balance:</strong> <span id="fdBal">INR 0.00</span></div> -->
+                        <div><strong>Effective Available Balance:</strong> <span id="effAvailBal"></span>
+                        </div>
+                        <div class="mini-note">Note: Transactions conducted on non-banking day will have the transaction
+                            date as the next working day.</div>
+                        <div class="dispute-link">
+                            To raise a Dispute/Fraud for any transaction <a href="#"
+                                style="color: var(--accent-primary);text-decoration:underline;">Click here</a>
+                        </div>
+                    </div>
+                    <table class="requests-table mini-statement-table" style="margin-top:24px;">
+                        <thead>
+                            <tr>
+                                <th>Txn<br>Number</th>
+                                <th>Transaction<br>Date</th>
+                                <th>Transaction Remark</th>
+                                <th>CR/DR</th>
+                                <th>Amount (INR)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="miniStatementBody" style="text-align: center;">
+                            <!-- Statement rows rendered here -->
+                        </tbody>
+                    </table>
+                    <div class="mini-buttons">
+                        <button class="action-btn" onclick="gotoDetailedStatement()">
+                            <i class="fas fa-file-alt"></i> DETAILED STATEMENT
+                        </button>
+                        <!-- <button class="action-btn">
+                            <i class="fas fa-exchange-alt"></i> FUNDS TRANSFER
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-receipt"></i> BILL PAYMENT
+                        </button>
+                        <button class="action-btn">
+                            <i class="fas fa-gift"></i> FUND IWSH
+                        </button> -->
+                        <div style="margin-left:auto;">
+                            <label for="downloadStmt" style="color: var(--text-primary);font-weight:500;">Download
+                                Details As:</label>
+                            <select id="downloadStmt" class="filter-select" style="width:auto;display:inline-block;">
+                                <!-- <option value="pdf">PDF file</option> -->
+                                <option value="csv">CSV file</option>
+                            </select>
+                            <button class="action-btn" onclick="downloadMiniStatement()"><i class="fas fa-download"></i>
+                                OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Statement Section -->
+            <div id="detailedStatement" class="content-section">
+                <div class="section-card glass">
+                    <!-- Tabs for Statement Types -->
+                    <div class="statement-tabs">
+                        <button class="tab-link active" onclick="switchStatementTab(this, 'detailed')">
+                            <i class="fas fa-list-alt"></i> Detailed Statement
+                        </button>
+                        <button class="tab-link" onclick="switchStatementTab(this, 'e-statement')">
+                            <i class="fas fa-file-pdf"></i> E-Statement
+                        </button>
+                        <button class="tab-link" onclick="switchStatementTab(this, 'mail')">
+                            <i class="fas fa-envelope"></i> Statement Over Mail
+                        </button>
+                    </div>
+
+                    <!-- Detailed Statement Content -->
+                    <div id="detailedTabContent">
+                        <div class="info-banner">
+                            To print or download your statement, please click on the E-Statement Tab.
+                        </div>
+
+                        <!-- Filter Form -->
+                        <div class="search-filter detailed-filters">
+                            <div class="filter-group">
+                                <label>Account Number</label>
+                                <div class="filter-select" id="accholder"></div>
+                            </div>
+                            <div class="filter-group">
+                                <label><input type="radio" name="periodType" checked> Transaction Date from</label>
+                                <input type="date" class="filter-select" id="detailedStartDate" value="2025-07-15">
+                                <label>to</label>
+                                <input type="date" class="filter-select" id="detailedEndDate" value="2025-07-30">
+                            </div>
+                            <!-- <div class="filter-group">
+                                <label><input type="radio" name="periodType"> Transaction Period</label>
+                                <select class="filter-select">
+                                    <option>Today</option>
+                                    <option>Last 7 Days</option>
+                                    <option>Last 30 Days</option>
+                                </select>
+                            </div> -->
+                        </div>
+                        <div class="search-filter2">
+                            <div class="filter-group">
+                                <label><input type="radio" name="periodType"> Transaction Period</label>
+                                <select id="periodDropdown" class="filter-select" onchange="handlePeriodSelection()">
+                                    <option value="">--Select--</option>
+                                    <!-- <option value="today" class="value-option">Today</option> -->
+                                    <option value="lastweek" class="value-option">Last Week</option>
+                                    <option value="last6months" class="value-option">Last 6 Months</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label><input type="radio" name="periodType"> Transaction Type</label>
+                                <select id="transactionTypeDropdown" class="filter-select"
+                                    onchange="handleTransactionTypeSelection()">
+                                    <option value="">--Select--</option>
+                                    <option class="value-type">Credit</option>
+                                    <option class="value-type">Debit</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <!-- Action Buttons -->
+                        <div class="detailed-actions">
+                            <button class="action-btn" onclick="goBackToMiniStatement()">
+                                <i class="fas fa-arrow-left"></i> BACK
+                            </button>
+                            <button id="clearButton" class="action-btn">
+                                <i class="fas fa-times"></i> CLEAR
+                            </button>
+                            <button class="action-btn primary-action" onclick="renderDetailedStatement()">
+                                <i class="fas fa-eye"></i> VIEW DETAILED STATEMENT
+                            </button>
+                            <button class="action-btn primary-action" onclick="loadLast10DetailedTransactions()">
+                                <i class="fas fa-history"></i> LAST 10 TRANSACTIONS
+                            </button>
+                        </div>
+
+                        <div class="dispute-link" style="margin-top: 20px;font-size:13px">
+                            To raise a Dispute/Fraud for any transaction <a href="#"
+                                style="color: var(--accent-primary);text-decoration:underline;">Click here</a>
+                        </div>
+
+                        <!-- Transaction Table -->
+                        <div class="section-header" style="margin-top: 20px; margin-bottom: 10px;">
+                            <h3 class="section-title" style="font-size: 18px;">Transactions List : <span
+                                    id="nameaccholder"></span></h3>
+                            <span id="paginationInfo" style="color: var(--text-secondary);"></span>
+                        </div>
+                        <table class="requests-table detailed-statement-table">
+                            <thead>
+                                <tr>
+                                    <th>S No.</th>
+                                    <!-- <th>Value Date</th> -->
+                                    <th>Transaction Date</th>
+                                    <!-- <th>Cheque Number</th> -->
+                                    <th>Transaction Remarks</th>
+                                    <th>Withdrawal (INR)</th>
+                                    <th>Deposit (INR)</th>
+                                    <th>Balance (INR)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detailedStatementBody">
+                                <!-- Detailed statement rows will be rendered here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Section -->
+            <div id="support" class="content-section">
+                <div class="section-card glass">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-headset icon-with-margin"></i>
+                            Customer Support
+                        </h2>
+                    </div>
+
+                    <div class="support-options">
+                        <div class="support-card glass" onclick="startChat()">
+                            <i class="fas fa-comments"></i>
+                            <h3>Live Chat</h3>
+                            <p>Chat with our support team</p>
+                            <span class="availability online">Available now</span>
+                        </div>
+
+                        <div class="support-card glass" onclick="callSupport()">
+                            <i class="fas fa-phone"></i>
+                            <h3>Phone Support</h3>
+                            <p>Call us at 1-800-BANKING</p>
+                            <span class="availability">24/7 Available</span>
+                        </div>
+
+                        <div class="support-card glass" onclick="emailSupport()">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Email Support</h3>
+                            <p>Send us an email</p>
+                            <span class="availability">Response in 24hrs</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Settings Section -->
+            <div id="profile" class="content-section">
+                <div class="section-card glass">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-user-cog icon-with-margin"></i>
+                            Profile Settings
+                        </h2>
+                        <button class="action-btn" onclick="saveProfile()">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+
+                    <div class="profile-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" id="profileFirstName" value="John">
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" id="profileLastName" value="Doe">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" class="form-control" id="profileEmail" value="john.doe@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <input type="tel" class="form-control" id="profilePhone" value="+1 (555) 123-4567">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Address</label>
+                            <textarea class="form-control" id="profileAddress" rows="3">123 Main Street
+New York, NY 10001</textarea>
+                        </div>
+
+                        <div class="security-settings">
+                            <h3>Security Settings</h3>
+                            <div class="setting-item">
+                                <div class="setting-info">
+                                    <h4>Two-Factor Authentication</h4>
+                                    <p>Add an extra layer of security</p>
+                                </div>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Edit Modal -->
+            <div class="modal-overlay" id="editModal">
+                <div class="modal-content edit-modal">
+                    <div class="modal-header">
+                        <h3 id="editModalTitle">Edit Information</h3>
+                        <button class="close-btn" onclick="closeEditModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="edit-form">
+                            <div class="form-group">
+                                <label id="editFieldLabel">Field Name</label>
+                                <input type="text" id="editFieldInput" class="form-control"
+                                    placeholder="Enter new value">
+                            </div>
+                            <button class="update-btn" onclick="sendOTPForUpdate()">
+                                <i class="fas fa-save"></i>
+                                Update Information
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="passwordResetModal">
+                <div class="modal-content password-reset-modal">
+                    <div class="modal-header">
+                        <h3 id="passwordResetModalTitle">Reset Login Password</h3>
+                        <button class="close-btn" onclick="closePasswordResetModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="edit-form">
+                            <div class="form-group">
+                                <label>Enter Current Login Password</label>
+                                <input type="password" id="currentPasswordInput" class="form-control"
+                                    placeholder="Current Password">
+                            </div>
+                            <div class="form-group" id="newPasswordGroup" style="display: none;">
+                                <label>Enter New Password</label>
+                                <input type="password" id="newPasswordInput" class="form-control"
+                                    placeholder="New Password">
+                            </div>
+                            <button class="update-btn" id="passwordResetButton" onclick="verifyCurrentPassword()">
+                                <i class="fas fa-unlock"></i>
+                                Verify Password
+                            </button>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="modal-overlay" id="transactionPasswordResetModal">
+                <div class="modal-content password-reset-modal">
+                    <div class="modal-header">
+                        <h3 id="transactionPasswordResetModalTitle">Reset Transaction Password</h3>
+                        <button class="close-btn" onclick="closeTransactionPasswordResetModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="edit-form">
+                            <div class="form-group">
+                                <label>Enter Current Transaction Password</label>
+                                <input type="password" id="currentTransactionPasswordInput" class="form-control"
+                                    placeholder="Current Transaction Password">
+                            </div>
+                            <div class="form-group" id="newTransactionPasswordGroup" style="display: none;">
+                                <label>Enter New Transaction Password</label>
+                                <input type="password" id="newTransactionPasswordInput" class="form-control"
+                                    placeholder="New Transaction Password">
+                            </div>
+                            <button class="update-btn" id="transactionPasswordResetButton"
+                                onclick="verifyCurrentTransactionPassword()">
+                                <i class="fas fa-unlock"></i>
+                                Verify Password
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OTP Verification Modal -->
+            <div class="modal-overlay" id="otpModal">
+                <div class="modal-content otp-modal">
+                    <div class="modal-header">
+                        <h3>
+                            <div class="security-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            Email Verification
+                        </h3>
+                        <button class="close-btn" onclick="closeOTPModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="otp-info-compact">
+                            <div class="email-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <p class="otp-message">Verification code sent to</p>
+                            <p class="otp-email" id="otpEmail">john.smith@email.com</p>
+                        </div>
+
+                        <div class="otp-input-section">
+                            <div class="otp-input-container">
+                                <input type="text" maxlength="1" class="otp-input" oninput="handleOTPInput(this, 0)"
+                                    onkeydown="handleOTPKeydown(event, 0)">
+                                <input type="text" maxlength="1" class="otp-input" oninput="handleOTPInput(this, 1)"
+                                    onkeydown="handleOTPKeydown(event, 1)">
+                                <input type="text" maxlength="1" class="otp-input" oninput="handleOTPInput(this, 2)"
+                                    onkeydown="handleOTPKeydown(event, 2)">
+                                <input type="text" maxlength="1" class="otp-input" oninput="handleOTPInput(this, 3)"
+                                    onkeydown="handleOTPKeydown(event, 3)">
+                                <input type="text" maxlength="1" class="otp-input" oninput="handleOTPInput(this, 4)"
+                                    onkeydown="handleOTPKeydown(event, 4)">
+                                <input type="text" maxlength="1" class="otp-input" oninput="handleOTPInput(this, 5)"
+                                    onkeydown="handleOTPKeydown(event, 5)">
+                            </div>
+                        </div>
+
+                        <div class="timer-compact">
+                            <i class="fas fa-clock"></i>
+                            <span id="otpTimer">5:00</span>
+                        </div>
+
+                        <div class="otp-actions-compact">
+                            <button class="verify-btn-primary" onclick="verifyOTPAndUpdate()">
+                                <i class="fas fa-check"></i>
+                                Verify & Update
+                            </button>
+                            <button class="resend-btn-secondary" onclick="resendOTP()">
+                                <i class="fas fa-redo"></i>
+                                Resend
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Reset Modal -->
+            <div class="modal-overlay" id="passwordResetModal">
+                <div class="modal-content password-reset-modal">
+                    <div class="modal-header">
+                        <h3 id="passwordResetModalTitle">
+                            <div class="security-icon">
+                                <i class="fas fa-key"></i>
+                            </div>
+                            Reset Password
+                        </h3>
+                        <button class="close-btn" onclick="closePasswordResetModal()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="password-reset-steps">
+                            <!-- Step 1: Password Input -->
+                            <div class="password-step active" id="passwordInputStep">
+                                <div class="step-header">
+                                    <div class="step-number">1</div>
+                                    <div class="step-title">Enter New Password</div>
+                                </div>
+                                <div class="password-form">
+                                    <div class="form-group">
+                                        <label for="newPassword">New Password</label>
+                                        <div class="password-input-container">
+                                            <input type="password" id="newPassword" placeholder="Enter new password"
+                                                required>
+                                            <button type="button" class="password-toggle"
+                                                onclick="togglePasswordVisibility('newPassword')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="password-requirements">
+                                            <ul>
+                                                <li class="requirement" id="req-length">At least 8 characters</li>
+                                                <li class="requirement" id="req-uppercase">One uppercase letter</li>
+                                                <li class="requirement" id="req-lowercase">One lowercase letter</li>
+                                                <li class="requirement" id="req-number">One number</li>
+                                                <li class="requirement" id="req-special">One special character</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmPassword">Confirm Password</label>
+                                        <div class="password-input-container">
+                                            <input type="password" id="confirmPassword"
+                                                placeholder="Confirm new password" required>
+                                            <button type="button" class="password-toggle"
+                                                onclick="togglePasswordVisibility('confirmPassword')">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="password-match-indicator" id="passwordMatchIndicator"></div>
+                                    </div>
+                                    <div class="step-actions">
+                                        <button class="btn-secondary"
+                                            onclick="closePasswordResetModal()">Cancel</button>
+                                        <button class="btn-primary" onclick="proceedToPasswordOTP()"
+                                            id="continuePasswordBtn" disabled>
+                                            Continue
+                                            <i class="fas fa-arrow-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: OTP Verification -->
+                            <div class="password-step" id="passwordOTPStep">
+                                <div class="step-header">
+                                    <div class="step-number">2</div>
+                                    <div class="step-title">Email Verification</div>
+                                </div>
+                                <div class="otp-info-compact">
+                                    <div class="email-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <p class="otp-message">Verification code sent to</p>
+                                    <p class="otp-email" id="passwordOtpEmail">john.smith@email.com</p>
+                                </div>
+
+                                <div class="otp-input-section">
+                                    <div class="otp-input-container">
+                                        <input type="text" maxlength="1" class="otp-input password-otp-input"
+                                            oninput="handlePasswordOTPInput(this, 0)"
+                                            onkeydown="handlePasswordOTPKeydown(event, 0)">
+                                        <input type="text" maxlength="1" class="otp-input password-otp-input"
+                                            oninput="handlePasswordOTPInput(this, 1)"
+                                            onkeydown="handlePasswordOTPKeydown(event, 1)">
+                                        <input type="text" maxlength="1" class="otp-input password-otp-input"
+                                            oninput="handlePasswordOTPInput(this, 2)"
+                                            onkeydown="handlePasswordOTPKeydown(event, 2)">
+                                        <input type="text" maxlength="1" class="otp-input password-otp-input"
+                                            oninput="handlePasswordOTPInput(this, 3)"
+                                            onkeydown="handlePasswordOTPKeydown(event, 3)">
+                                        <input type="text" maxlength="1" class="otp-input password-otp-input"
+                                            oninput="handlePasswordOTPInput(this, 4)"
+                                            onkeydown="handlePasswordOTPKeydown(event, 4)">
+                                        <input type="text" maxlength="1" class="otp-input password-otp-input"
+                                            oninput="handlePasswordOTPInput(this, 5)"
+                                            onkeydown="handlePasswordOTPKeydown(event, 5)">
+                                    </div>
+                                </div>
+
+                                <div class="timer-compact">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="passwordOtpTimer">5:00</span>
+                                </div>
+
+                                <div class="step-actions">
+                                    <button class="btn-secondary" onclick="backToPasswordInput()">
+                                        <i class="fas fa-arrow-left"></i>
+                                        Back
+                                    </button>
+                                    <button class="btn-primary" onclick="verifyPasswordOTPAndUpdate()"
+                                        id="verifyPasswordBtn" disabled>
+                                        <i class="fas fa-check"></i>
+                                        Verify & Update Password
+                                    </button>
+                                </div>
+                                <div class="otp-resend-section">
+                                    <button class="resend-btn-secondary" onclick="resendPasswordOTP()">
+                                        <i class="fas fa-redo"></i>
+                                        Resend Code
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Modal -->
+            <div class="modal-overlay" id="successModal">
+                <div class="modal-content success-modal">
+                    <div class="modal-body">
+                        <div class="success-animation">
+                            <div class="success-checkmark">
+                                <div class="check-icon">
+                                    <span class="icon-line line-tip"></span>
+                                    <span class="icon-line line-long"></span>
+                                    <div class="icon-circle"></div>
+                                    <div class="icon-fix"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <h3>Details Updated Successfully!</h3>
+                        <p id="successMessage">Your information has been updated securely.</p>
+                        <button class="ok-btn" onclick="closeSuccessModal()">
+                            <i class="fas fa-check"></i>
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- ...existing code... -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="Database.js"></script>
+    <script src="customer-dashboard.js"></script>
+
+    <script>
+        setTimeout(function () {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.display = 'none';
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }
+
+            // Ensure customer container is visible
+            const customerContainer = document.querySelector('.customer-container');
+            if (customerContainer) {
+                customerContainer.style.opacity = '1';
+                customerContainer.style.visibility = 'visible';
+            }
+        }, 3000); // Fallback after 3 seconds
+        document.getElementById('clearButton').addEventListener('click', function () {
+            const tbody = document.getElementById('detailedStatementBody');
+            tbody.innerHTML = '';
+        });
+    </script>
+</body>
+
+</html>

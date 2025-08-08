@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OraCube - Digital Banking</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.1/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.1/dist/ScrollTrigger.min.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h3 class="loading-text">Welcome to OraCube Digital Banking...</h3>
+        </div>
+    </div>
+
+    <div class="bg-animation" id="bg-animation"></div>
+    
+    <div class="home-container">
+        <!-- Hero Section - Full Height -->
+        <section class="hero-section" id="hero">
+            <div class="brand">
+                <div class="bank-3d-logo" id="bank-3d-logo">
+                    <div class="digital-cube">
+                        <div class="cube-container">
+                            <div class="cube">
+                                <div class="cube-face front">
+                                    <div class="face-grid">
+                                        <div class="grid-cell" style="--delay: 0s"></div>
+                                        <div class="grid-cell" style="--delay: 0.1s"></div>
+                                        <div class="grid-cell" style="--delay: 0.2s"></div>
+                                        <div class="grid-cell" style="--delay: 0.3s"></div>
+                                        <div class="grid-cell" style="--delay: 0.4s"></div>
+                                        <div class="grid-cell" style="--delay: 0.5s"></div>
+                                        <div class="grid-cell" style="--delay: 0.6s"></div>
+                                        <div class="grid-cell" style="--delay: 0.7s"></div>
+                                        <div class="grid-cell" style="--delay: 0.8s"></div>
+                                    </div>
+                                    <div class="face-logo">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                </div>
+                                <div class="cube-face back">
+                                    <div class="face-pattern">
+                                        <div class="pattern-line" style="--index: 1"></div>
+                                        <div class="pattern-line" style="--index: 2"></div>
+                                        <div class="pattern-line" style="--index: 3"></div>
+                                        <div class="pattern-line" style="--index: 4"></div>
+                                    </div>
+                                </div>
+                                <div class="cube-face right">
+                                    <div class="face-data">
+                                        <div class="data-stream" style="--delay: 0s"></div>
+                                        <div class="data-stream" style="--delay: 0.3s"></div>
+                                        <div class="data-stream" style="--delay: 0.6s"></div>
+                                        <div class="data-stream" style="--delay: 0.9s"></div>
+                                        <div class="data-stream" style="--delay: 1.2s"></div>
+                                    </div>
+                                </div>
+                                <div class="cube-face left">
+                                    <div class="face-circuit">
+                                        <div class="circuit-line horizontal" style="top: 20%"></div>
+                                        <div class="circuit-line horizontal" style="top: 50%"></div>
+                                        <div class="circuit-line horizontal" style="top: 80%"></div>
+                                        <div class="circuit-line vertical" style="left: 30%"></div>
+                                        <div class="circuit-line vertical" style="left: 70%"></div>
+                                        <div class="circuit-node" style="top: 20%; left: 30%"></div>
+                                        <div class="circuit-node" style="top: 50%; left: 70%"></div>
+                                        <div class="circuit-node" style="top: 80%; left: 30%"></div>
+                                    </div>
+                                </div>
+                                <div class="cube-face top">
+                                    <div class="face-hologram">
+                                        <div class="hologram-ring" style="--size: 80px; --delay: 0s"></div>
+                                        <div class="hologram-ring" style="--size: 60px; --delay: 0.5s"></div>
+                                        <div class="hologram-ring" style="--size: 40px; --delay: 1s"></div>
+                                        <div class="hologram-center">
+                                            <i class="fas fa-chart-line"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cube-face bottom">
+                                    <div class="face-energy">
+                                        <div class="energy-wave" style="--delay: 0s"></div>
+                                        <div class="energy-wave" style="--delay: 0.2s"></div>
+                                        <div class="energy-wave" style="--delay: 0.4s"></div>
+                                        <div class="energy-wave" style="--delay: 0.6s"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cube-glow"></div>
+                        <div class="orbital-particles">
+                            <div class="particle p-1"></div>
+                            <div class="particle p-2"></div>
+                            <div class="particle p-3"></div>
+                            <div class="particle p-4"></div>
+                            <div class="particle p-5"></div>
+                            <div class="particle p-6"></div>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="title">OraCube Digital Banking</h1>
+            </div>
+            <p class="slogan">Banking reimagined for the digital age. Secure. Seamless. Smart.</p>
+            <div class="scroll-indicator">
+                <p>Scroll to explore</p>
+                <i class="fas fa-chevron-down bounce"></i>
+            </div>
+        </section>
+        
+        <!-- Options Section (after scroll) -->
+        <section class="options-section" id="options">
+            <h2 class="section-title">How Can We Help You Today?</h2>
+            
+            <div class="cards-row">
+                <div class="action-card" onclick="window.location.href='account-request.html'">
+                    <div class="card-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h2>Account Request</h2>
+                    <p>Open a new account with us in minutes.</p>
+                    <div class="card-overlay"></div>
+                    <div class="card-hover">
+                        <div class="hover-content">
+                            <span class="btn-text">Get Started</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-card" onclick="window.location.href='customer-login.html'">
+                    <div class="card-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h2>Customer Login</h2>
+                    <p>Access your accounts securely.</p>
+                    <div class="card-overlay"></div>
+                    <div class="card-hover">
+                        <div class="hover-content">
+                            <span class="btn-text">Login Now</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-card" onclick="window.location.href='admin-login.html'">
+                    <div class="card-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h2>Admin Login</h2>
+                    <p>Bank staff administration portal.</p>
+                    <div class="card-overlay"></div>
+                    <div class="card-hover">
+                        <div class="hover-content">
+                            <span class="btn-text">Admin Portal</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <h2 class="section-title">Premium Banking Features</h2>
+            
+            <div class="features-row">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Advanced Security</h3>
+                    <p>Multi-layer encryption and biometric verification</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Instant Transfers</h3>
+                    <p>Lightning-fast global transactions</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Investment Tools</h3>
+                    <p>AI-powered portfolio management</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3>Wealth Management</h3>
+                    <p>Expert financial advice</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schemes/Plans Section -->
+        <section class="schemes-section" id="schemes">
+            <h2 class="section-title">Premium Banking Schemes</h2>
+            
+            <div class="schemes-row">
+                <div class="scheme-card gold">
+                    <div class="scheme-badge">Gold</div>
+                    <div class="scheme-content">
+                        <h3>Gold Banking</h3>
+                        <ul class="scheme-features">
+                            <li><i class="fas fa-check-circle"></i> 24/7 Priority Service</li>
+                            <li><i class="fas fa-check-circle"></i> Preferential Rates</li>
+                            <li><i class="fas fa-check-circle"></i> Gold Debit Card</li>
+                        </ul>
+                        <button class="scheme-btn">Learn More</button>
+                    </div>
+                </div>
+                
+                <div class="scheme-card platinum">
+                    <div class="scheme-badge">Platinum</div>
+                    <div class="scheme-content">
+                        <h3>Platinum Banking</h3>
+                        <ul class="scheme-features">
+                            <li><i class="fas fa-check-circle"></i> Relationship Manager</li>
+                            <li><i class="fas fa-check-circle"></i> Wealth Advisory</li>
+                            <li><i class="fas fa-check-circle"></i> Premium Insurance</li>
+                        </ul>
+                        <button class="scheme-btn">Learn More</button>
+                    </div>
+                </div>
+                
+                <div class="scheme-card diamond">
+                    <div class="scheme-badge">Diamond</div>
+                    <div class="scheme-content">
+                        <h3>Diamond Elite</h3>
+                        <ul class="scheme-features">
+                            <li><i class="fas fa-check-circle"></i> Concierge Service</li>
+                            <li><i class="fas fa-check-circle"></i> Private Banking</li>
+                            <li><i class="fas fa-check-circle"></i> Custom Solutions</li>
+                        </ul>
+                        <button class="scheme-btn">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 3D Footer -->
+    <footer class="home-footer">
+        <div class="footer-3d-container">
+            <div class="footer-3d-world" id="footer-3d-world"></div>
+            <div class="footer-content">
+                <div class="footer-section about">
+                    <h3>OraCube Digital Banking</h3>
+                    <p>Revolutionizing the future of banking with cutting-edge technology and customer-first approach.</p>
+                    <div class="contact">
+                        <p><i class="fas fa-phone"></i> +1-800-ORACUBE</p>
+                        <p><i class="fas fa-envelope"></i> info@oracubebanking.com</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Support Center</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section social">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OraCube Digital Banking. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="home.js"></script>
+</body>
+</html>

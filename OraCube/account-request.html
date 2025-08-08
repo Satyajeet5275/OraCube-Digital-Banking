@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OraCube - Account Request</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="account-request.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h3 class="loading-text">Setting up your account request...</h3>
+        </div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation" id="bg-animation"></div>
+
+    <div class="request-container">
+        <!-- Header -->
+        <div class="request-header">
+            <div class="bank-logo">
+                <i class="fas fa-university"></i>
+            </div>
+            <h1 class="bank-title">OraCube Banking</h1>
+            <p class="bank-subtitle">Account Opening Request</p>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-icon"><i class="fas fa-user"></i></div>
+                    <span>Personal Info</span>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-icon"><i class="fas fa-phone"></i></div>
+                    <span>Contact Details</span>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-icon"><i class="fas fa-id-card"></i></div>
+                    <span>Identity Verification</span>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-icon"><i class="fas fa-briefcase"></i></div>
+                    <span>Financial Info</span>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="step-icon"><i class="fas fa-shield-alt"></i></div>
+                    <span>Verification</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Form Container -->
+        <div class="form-container">
+            <!-- Step 1: Personal Information -->
+            <div class="form-step active" id="step1">
+                <div class="step-card">
+                    <div class="step-header">
+                        <h2><i class="fas fa-user"></i> Personal Information</h2>
+                        <p>Let's start with your basic details</p>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <select id="title" name="title" required>
+                                <option value="">Select Title</option>
+                                <option value="Mr.">Mr.</option>
+                                <option value="Mrs.">Mrs.</option>
+                                <option value="Ms.">Ms.</option>
+                                <option value="Dr.">Dr.</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="middleName">Middle Name</label>
+                            <input type="text" id="middleName" name="middleName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="dob">Date of Birth <small>(You must be at least 18 years old)</small></label>
+                            <input type="date" id="dob" name="dob" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn btn-primary btn-next">
+                        <i class="fas fa-arrow-right"></i> Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Contact Information -->
+            <div class="form-step" id="step2">
+                <div class="step-card">
+                    <div class="step-header">
+                        <h2><i class="fas fa-phone"></i> Contact Details</h2>
+                        <p>How can we reach you?</p>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="mobileNo">Mobile Number</label>
+                            <input type="tel" id="mobileNo" name="mobileNo" pattern="[0-9]{10}" required>
+                            <small>Enter 10-digit mobile number</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="residentialAddress">Residential Address</label>
+                            <textarea id="residentialAddress" name="residentialAddress" rows="3" required></textarea>
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="permanentAddress">Permanent Address</label>
+                            <textarea id="permanentAddress" name="permanentAddress" rows="3" required></textarea>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="sameAddress" onchange="copyAddress()">
+                                <label for="sameAddress">Same as residential address</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn btn-secondary btn-prev">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next">
+                        <i class="fas fa-arrow-right"></i> Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Identity Verification -->
+            <div class="form-step" id="step3">
+                <div class="step-card">
+                    <div class="step-header">
+                        <h2><i class="fas fa-id-card"></i> Identity Verification</h2>
+                        <p>Secure verification documents</p>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="aadharNo">Aadhar Number</label>
+                            <input type="text" id="aadharNo" name="aadharNo" pattern="[0-9]{12}" maxlength="12" required>
+                            <small>12-digit Aadhar number</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="panNo">PAN Number</label>
+                            <input type="text" id="panNo" name="panNo" pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxlength="10" required style="text-transform: uppercase;">
+                            <small>10-character PAN number</small>
+                        </div>
+                    </div>
+                    <div class="security-note">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Your identity documents are encrypted and securely stored in compliance with banking regulations.</p>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn btn-secondary btn-prev">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next">
+                        <i class="fas fa-arrow-right"></i> Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 4: Financial Information -->
+            <div class="form-step" id="step4">
+                <div class="step-card">
+                    <div class="step-header">
+                        <h2><i class="fas fa-briefcase"></i> Financial Information</h2>
+                        <p>Help us understand your financial profile</p>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="occupation">Occupation</label>
+                            <select id="occupation" name="occupation" required>
+                                <option value="">Select Occupation</option>
+                                <option value="Salaried">Salaried Employee</option>
+                                <option value="Business">Business Owner</option>
+                                <option value="Professional">Professional</option>
+                                <option value="Student">Student</option>
+                                <option value="Retired">Retired</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="annualIncome">Annual Income (₹)</label>
+                            <select id="annualIncome" name="annualIncome" required>
+                                <option value="">Select Income Range</option>
+                                <option value="100000">Below ₹1,00,000</option>
+                                <option value="300000">₹1,00,000 - ₹3,00,000</option>
+                                <option value="500000">₹3,00,000 - ₹5,00,000</option>
+                                <option value="750000">₹5,00,000 - ₹7,50,000</option>
+                                <option value="1000000">₹7,50,000 - ₹10,00,000</option>
+                                <option value="1500000">Above ₹10,00,000</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label>Account Type</label>
+                            <div class="account-types">
+                                <div class="account-option" data-type="savings">
+                                    <div class="account-icon">
+                                        <i class="fas fa-piggy-bank"></i>
+                                    </div>
+                                    <h4>Savings Account</h4>
+                                    <p>Ideal for personal savings with attractive interest rates</p>
+                                </div>
+                                <div class="account-option" data-type="current">
+                                    <div class="account-icon">
+                                        <i class="fas fa-briefcase"></i>
+                                    </div>
+                                    <h4>Current Account</h4>
+                                    <p>Perfect for business transactions and daily operations</p>
+                                </div>
+                                <div class="account-option" data-type="premium">
+                                    <div class="account-icon">
+                                        <i class="fas fa-crown"></i>
+                                    </div>
+                                    <h4>Premium Account</h4>
+                                    <p>Exclusive benefits and premium banking services</p>
+                                </div>
+                            </div>
+                            <input type="hidden" id="accountType" name="accountType" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn btn-secondary btn-prev">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-next">
+                        <i class="fas fa-arrow-right"></i> Next
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 5: Review & Submit -->
+            <div class="form-step" id="step5">
+                <div class="step-card">
+                    <div class="step-header">
+                        <h2><i class="fas fa-clipboard-check"></i> Review & Submit</h2>
+                        <p>Please review your information before submitting</p>
+                    </div>
+                    <div class="review-sections">
+                        <div class="review-section">
+                            <h3><i class="fas fa-user"></i> Personal Information</h3>
+                            <div class="review-grid" id="reviewPersonal"></div>
+                        </div>
+                        <div class="review-section">
+                            <h3><i class="fas fa-phone"></i> Contact Details</h3>
+                            <div class="review-grid" id="reviewContact"></div>
+                        </div>
+                        <div class="review-section">
+                            <h3><i class="fas fa-id-card"></i> Identity Verification</h3>
+                            <div class="review-grid" id="reviewIdentity"></div>
+                        </div>
+                        <div class="review-section">
+                            <h3><i class="fas fa-briefcase"></i> Financial Information</h3>
+                            <div class="review-grid" id="reviewFinancial"></div>
+                        </div>
+                    </div>
+                    <div class="terms-agreement">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="termsAccepted" required>
+                            <label for="termsAccepted">I agree to the <a href="#" class="terms-link">Terms & Conditions</a> and <a href="#" class="terms-link">Privacy Policy</a></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-buttons">
+                    <button type="button" class="btn btn-secondary btn-prev">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn btn-primary btn-submit">
+                        <i class="fas fa-paper-plane"></i> Submit Request
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Modal -->
+    <div class="modal" id="otpModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-shield-check"></i> OTP Verification</h2>
+                <p>We've sent a 6-digit verification code to your mobile number</p>
+            </div>
+            <div class="otp-container">
+                <div class="otp-inputs">
+                    <input type="text" class="otp-input" maxlength="1" data-index="0">
+                    <input type="text" class="otp-input" maxlength="1" data-index="1">
+                    <input type="text" class="otp-input" maxlength="1" data-index="2">
+                    <input type="text" class="otp-input" maxlength="1" data-index="3">
+                    <input type="text" class="otp-input" maxlength="1" data-index="4">
+                    <input type="text" class="otp-input" maxlength="1" data-index="5">
+                </div>
+                <div class="otp-timer">
+                    <i class="fas fa-clock"></i>
+                    <span>Resend OTP in: </span>
+                    <span class="timer-display" id="otpTimer">05:00</span>
+                </div>
+                <div class="otp-actions">
+                    <button type="button" class="btn btn-secondary" id="resendOtp" disabled>
+                        <i class="fas fa-redo"></i> Resend OTP
+                    </button>
+                    <button type="button" class="btn btn-primary" id="verifyOtp">
+                        <i class="fas fa-check"></i> Verify OTP
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <p><i class="fas fa-info-circle"></i> Didn't receive the code? Check your spam folder or try resending.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Request Submitted Successfully!</h2>
+            <p>Your account opening request has been submitted. You will receive a confirmation email shortly.</p>
+            <div class="success-details">
+                <div class="detail-item">
+                    <span class="label">Reference Number:</span>
+                    <span class="value" id="referenceNumber">ACC-2025-123456</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Processing Time:</span>
+                    <span class="value">3-5 Business Days</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Auto-redirect:</span>
+                    <span class="value">Redirecting to home in 5 seconds...</span>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="window.location.href='home.html'">
+                <i class="fas fa-home"></i> Back to Home Now
+            </button>
+        </div>
+    </div>
+
+    <script src="Database.js"></script>
+    <script src="account-request.js"></script>
+</body>
+</html>

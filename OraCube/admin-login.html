@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OraCube - Admin Login</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="admin-login.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <h3 class="loading-text">Loading Admin Portal...</h3>
+        </div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation" id="bg-animation"></div>
+
+    <!-- Header -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="admin-logo">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>OraCube Banking</h1>
+                    <span>Admin Portal</span>
+                </div>
+            </div>
+            <a href="home.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="admin-container">
+        <div class="login-section">
+            <!-- Admin Login Card -->
+            <div class="admin-login-card">
+                <div class="card-header">
+                    <div class="admin-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h2>Administrator Access</h2>
+                    <p>Secure login for banking administrators</p>
+                </div>
+
+                <form id="adminLoginForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="adminId">Administrator ID</label>
+                        <div class="input-container">
+                            <input type="text" id="adminId" name="adminId" required autocomplete="username">
+                            <i class="fas fa-user-tie input-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adminPassword">Password</label>
+                        <div class="input-container">
+                            <input type="password" id="adminPassword" name="adminPassword" required autocomplete="current-password">
+                            <i class="fas fa-lock input-icon"></i>
+                            <button type="button" class="toggle-password" tabindex="-1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="security-options">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="secureSession" checked>
+                            <label for="secureSession">
+                                <span class="checkmark"></span>
+                                Enable secure session monitoring
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="admin-login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Access Admin Panel
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <div class="security-notice">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>This system is for authorized personnel only. All activities are monitored and logged.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Features Panel -->
+        <div class="security-panel">
+            <div class="security-header">
+                <h3>
+                    <i class="fas fa-shield-virus"></i>
+                    Security Features
+                </h3>
+            </div>
+
+            <div class="security-features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-lock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Multi-Factor Authentication</h4>
+                        <p>Multiple layers of verification to ensure admin identity</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Biometric Authentication</h4>
+                        <p>Advanced fingerprint and facial recognition for enhanced security</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Activity Monitoring</h4>
+                        <p>Real-time logging and monitoring of all administrative actions</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Session Management</h4>
+                        <p>Automatic timeout and secure session handling</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>IP Whitelisting</h4>
+                        <p>Access restricted to pre-approved network locations</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Encrypted Data</h4>
+                        <p>End-to-end encryption for all administrative data</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-Factor Authentication Modal -->
+    <div class="modal-overlay" id="adminTwoFactorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-shield-alt"></i>
+                    Administrator Verification
+                </h3>
+                <button class="close-btn" onclick="closeAdminTwoFactorModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="verification-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <p>Please enter the 6-digit verification code sent to your registered device</p>
+                
+                <div class="otp-input-container">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleAdminOtpInput(this, 0)" onkeydown="handleAdminOtpKeydown(event, 0)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleAdminOtpInput(this, 1)" onkeydown="handleAdminOtpKeydown(event, 1)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleAdminOtpInput(this, 2)" onkeydown="handleAdminOtpKeydown(event, 2)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleAdminOtpInput(this, 3)" onkeydown="handleAdminOtpKeydown(event, 3)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleAdminOtpInput(this, 4)" onkeydown="handleAdminOtpKeydown(event, 4)">
+                    <input type="text" class="otp-input" maxlength="1" oninput="handleAdminOtpInput(this, 5)" onkeydown="handleAdminOtpKeydown(event, 5)">
+                </div>
+                
+                <div class="verification-timer">
+                    <span>Code expires in <span id="adminOtpTimer">180</span> seconds</span>
+                    <button class="resend-otp-btn" id="adminResendBtn" onclick="resendAdminOtp()" style="display: none;">
+                        <i class="fas fa-redo"></i>
+                        Resend Code
+                    </button>
+                </div>
+                
+                <button class="verify-admin-btn" onclick="verifyAdminTwoFactor()">
+                    <i class="fas fa-check-shield"></i>
+                    Verify & Access
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="adminSuccessModal">
+        <div class="modal-content success-content">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3>Access Granted</h3>
+            <p>Welcome to the Administrator Panel</p>
+            <div class="admin-details">
+                <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Session started at <span id="sessionTime"></span></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Security level: Maximum</span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-history"></i>
+                    <span>All activities will be logged</span>
+                </div>
+            </div>
+            <button class="access-dashboard-btn" onclick="redirectToAdminDashboard()">
+                <i class="fas fa-tachometer-alt"></i>
+                Access Dashboard
+            </button>
+        </div>
+    </div>
+    <script src="Database1.js"></script>
+    <script src="admin-login.js"></script>
+</body>
+</html>
