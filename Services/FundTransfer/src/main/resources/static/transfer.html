@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Premium Bank Transfer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b5cf6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    .bg-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      animation: float 6s ease-in-out infinite;
+    }
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    .shape:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      right: 10%;
+      animation-delay: 2s;
+    }
+    .shape:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      33% {
+        transform: translateY(-20px) rotate(10deg);
+      }
+      66% {
+        transform: translateY(10px) rotate(-5deg);
+      }
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 40px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 1;
+      animation: slideIn 0.8s ease-out;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #a855f7, #e879f9);
+      border-radius: 16px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+    }
+    h1 {
+      color: white;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 16px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    label {
+      display: block;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    input,
+    select {
+      width: 100%;
+      padding: 14px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      color: white;
+      font-size: 16px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #a855f7;
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
+      transform: translateY(-2px);
+    }
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    select option {
+      background: #6b46c1;
+      color: white;
+    }
+    .amount-input {
+      position: relative;
+    }
+    .currency-symbol {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 18px;
+      font-weight: 600;
+      pointer-events: none;
+    }
+    .amount-input input {
+      padding-left: 45px;
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .quick-amounts {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .quick-amount {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .quick-amount:hover {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: #a855f7;
+      color: white;
+      transform: translateY(-2px);
+    }
+    .transfer-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #a855f7, #e879f9);
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .transfer-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(168, 85, 247, 0.5);
+    }
+    .transfer-btn:active {
+      transform: translateY(-1px);
+    }
+    .transfer-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+    .transfer-btn:hover::before {
+      left: 100%;
+    }
+    .security-note {
+      margin-top: 24px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      border-left: 4px solid #a855f7;
+    }
+    .security-note p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .icon {
+      display: inline-block;
+      margin-right: 8px;
+      font-size: 16px;
+      user-select: none;
+    }
+    @media (max-width: 520px) {
+      .container {
+        margin: 20px;
+        padding: 28px;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      .quick-amounts {
+        flex-wrap: wrap;
+      }
+    }
+    /* Success animation */
+    @keyframes successPulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    .success {
+      animation: successPulse 0.6s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+
+  <div class="container">
+    <div class="header">
+      <div class="logo">💳</div>
+      <h1>Fund Transfer</h1>
+      <p class="subtitle">Send money securely with premium banking</p>
+    </div>
+
+    <form id="transferForm">
+      <div class="form-group">
+        <label for="accountNumber">
+          <span class="icon">🏦</span>Sender Account Number
+        </label>
+        <input
+          type="text"
+          id="accountNumber"
+          name="accountNumber"
+          placeholder="Your account number"
+          required
+          pattern="\d+"
+          title="Account number must be digits only"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="accountType">
+          <span class="icon">🏷️</span>Account Type
+        </label>
+        <select id="accountType" name="accountType" required>
+          <option value="">Select Account Type</option>
+          <option value="SAVINGS">Savings</option>
+          <option value="CURRENT">Current</option>
+          <option value="LOAN">Loan</option>
+          <option value="FIXED_DEPOSIT">Fixed Deposit</option>
+          <option value="RECURRING_DEPOSIT">Recurring Deposit</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="transactionType">
+          <span class="icon">🔄</span>Transaction Type
+        </label>
+        <select id="transactionType" name="transactionType" required>
+          <option value="">Select Transaction Type</option>
+          <option value="CREDIT">Credit</option>
+          <option value="DEBIT">Debit</option>
+          <option value="TRANSFER">Transfer</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="transactionStatus">
+          <span class="icon">📊</span>Transaction Status
+        </label>
+        <select id="transactionStatus" name="transactionStatus" required>
+          <option value="">Select Transaction Status</option>
+          <option value="PENDING">Pending</option>
+          <option value="COMPLETED">Completed</option>
+          <option value="FAILED">Failed</option>
+          <option value="REVERSED">Reversed</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="paymentMethod">
+          <span class="icon">💳</span>Payment Method
+        </label>
+        <select id="paymentMethod" name="paymentMethod" required>
+          <option value="">Select Payment Method</option>
+          <option value="RTGS">RTGS</option>
+          <option value="NEFT">NEFT</option>
+          <option value="IMPS">IMPS</option>
+          <option value="SELF_DEPOSIT">Self Deposit</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="recipient">
+          <span class="icon">👤</span>Recipient Account Number or Email
+        </label>
+        <input
+          type="text"
+          id="recipient"
+          name="recipient"
+          placeholder="Enter account number or email"
+          pattern="^$|[0-9]{6,}|[^@\s]+@[^@\s]+\.[^@\s]+"
+          title="Enter valid account number or email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="bankName">
+          <span class="icon">🏦</span>Recipient Bank (For Manual Transfer)
+        </label>
+        <select id="bankName" name="bankName">
+          <option value="">Select Bank</option>
+          <option value="Chase Bank">Chase Bank</option>
+          <option value="Bank of America">Bank of America</option>
+          <option value="Wells Fargo">Wells Fargo</option>
+          <option value="Citibank">Citibank</option>
+          <option value="Goldman Sachs">Goldman Sachs</option>
+          <option value="JP Morgan">JP Morgan</option>
+          <option value="State Bank of India">State Bank of India</option>
+          <option value="HDFC Bank">HDFC Bank</option>
+          <option value="ICICI Bank">ICICI Bank</option>
+          <!-- Add more banks as needed -->
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="ifscCode">
+          <span class="icon">🏷️</span>IFSC Code (For Manual Transfer)
+        </label>
+        <input
+          type="text"
+          id="ifscCode"
+          name="ifscCode"
+          placeholder="Enter IFSC Code"
+          pattern="^[A-Za-z]{4}[0-9]{7}$"
+          title="IFSC format: 4 letters followed by 7 digits, e.g. SBIN0000456"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="payeeName">
+          <span class="icon">👥</span>Payee Name (For Manual Transfer)
+        </label>
+        <input
+          type="text"
+          id="payeeName"
+          name="payeeName"
+          placeholder="Enter payee full name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="amount">
+          <span class="icon">💰</span>Transfer Amount
+        </label>
+        <div class="amount-input">
+          <span class="currency-symbol">$</span>
+          <input
+            type="number"
+            id="amount"
+            name="amount"
+            placeholder="0.00"
+            step="0.01"
+            min="1"
+            required
+          />
+        </div>
+        <div class="quick-amounts">
+          <span class="quick-amount" onclick="setAmount(100)">$100</span>
+          <span class="quick-amount" onclick="setAmount(500)">$500</span>
+          <span class="quick-amount" onclick="setAmount(1000)">$1,000</span>
+          <span class="quick-amount" onclick="setAmount(5000)">$5,000</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="remarks">
+          <span class="icon">📝</span>Remarks / Note (Optional)
+        </label>
+        <input
+          type="text"
+          id="remarks"
+          name="remarks"
+          placeholder="Add remarks or notes"
+          maxlength="100"
+        />
+      </div>
+
+      <button type="submit" class="transfer-btn">
+        <span class="icon">🚀</span>Transfer Funds
+      </button>
+    </form>
+
+    <div class="security-note">
+      <p>
+        <span class="icon">🔒</span>
+        Your transfer is protected by 256-bit SSL encryption and multi-factor
+        authentication. Funds will be processed within 1-2 business days.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function setAmount(amount) {
+      document.getElementById("amount").value = amount;
+
+      const amountInput = document.querySelector(".amount-input");
+      amountInput.style.transform = "scale(1.02)";
+      setTimeout(() => {
+        amountInput.style.transform = "scale(1)";
+      }, 200);
+    }
+
+    document
+      .getElementById("transferForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const accountNumber = document
+          .getElementById("accountNumber")
+          .value.trim();
+        const accountType = document.getElementById("accountType").value;
+        const transactionType = document.getElementById("transactionType").value;
+        const transactionStatus =
+          document.getElementById("transactionStatus").value;
+        const paymentMethod = document.getElementById("paymentMethod").value;
+        const recipient = document.getElementById("recipient").value.trim();
+        const bankName = document.getElementById("bankName").value;
+        const ifscCode = document.getElementById("ifscCode").value.trim();
+        const payeeName = document.getElementById("payeeName").value.trim();
+        const amount = parseFloat(document.getElementById("amount").value);
+        const remarks = document.getElementById("remarks").value.trim();
+
+        if (!accountNumber || !accountType || !transactionType || !transactionStatus || !paymentMethod || !amount) {
+          alert("Please fill all required fields.");
+          return;
+        }
+
+        // Determine which API to call & construct payload
+        let apiUrl = "";
+        let payload = {};
+
+        if (paymentMethod === "SELF_DEPOSIT") {
+        	 apiUrl = "http://localhost:8081/api/transactions/self-deposit";
+             payload = {
+               accountNumber: Number(accountNumber),
+               amount: amount,
+               transactionMethod: "SELF_DEPOSIT",
+               remarks: remarks || "Self deposit"
+             };
+           } else if (paymentMethod !== "SELF_DEPOSIT" && transactionType === "TRANSFER") {
+             // If payeeAccountNumber provided (recipient is account number), assume payee transfer
+             if (recipient && recipient.match(/^\d+$/)) {
+               apiUrl = `http://localhost:8081/api/transactions/transfer/payee/${accountNumber}`;
+               payload = {
+                 accountNumber: Number(accountNumber),
+                 transactionMethod: paymentMethod,
+                 amount: amount,
+                 payeeAccountNumber: Number(recipient),
+                 remarks: remarks || ""
+               };
+             } else {
+               // Manual transfer - need payeeName, bankName, ifscCode
+               if (!recipient || !payeeName || !bankName || !ifscCode) {
+                 alert("For manual transfer, please fill recipient account, payee name, bank name and IFSC code.");
+                 return;
+               }
+               apiUrl = "http://localhost:8081/api/transactions/transfer/manual";
+               payload = {
+                 accountNumber: Number(accountNumber),
+                 transactionMethod: paymentMethod,
+                 transactionType: transactionType,
+                 amount: amount,
+                 remarks: remarks || "",
+                 payeeAccountNumber: Number(recipient),
+                 payeeName: payeeName,
+                 bankName: bankName,
+                 ifscCode: ifscCode,
+                 customerId: "CUST001" // or get dynamically if available
+               };
+             }
+           } else {
+             // For CREDIT or DEBIT transactions that are not self deposit or transfer, build generic payload
+             payload = {
+               accountNumber: Number(accountNumber),
+               transactionType: transactionType,
+               transactionStatus: transactionStatus,
+               transactionMethod: paymentMethod,
+               amount: amount,
+               remarks: remarks || ""
+             };
+             // Use a generic endpoint or handle accordingly
+             apiUrl = "http://localhost:8081/api/transactions/generic"; // Replace with your actual API if any
+             alert("Sending generic transaction - adjust endpoint as needed.");
+           }
+
+           // Show loading state
+           const container = document.querySelector(".container");
+           const button = document.querySelector(".transfer-btn");
+           button.disabled = true;
+           button.innerHTML = '<span class="icon">⏳</span> Processing...';
+           button.style.background = "linear-gradient(135deg, #6b46c1, #8b5cf6)";
+
+           // Simulate API call
+           setTimeout(() => {
+             // Here you would normally do fetch/post call, e.g.:
+             // fetch(apiUrl, { method: "POST", body: JSON.stringify(payload), headers: { "Content-Type": "application/json" } })
+
+             // For demo: success UI update
+             container.classList.add("success");
+             button.innerHTML = '<span class="icon">✅</span> Transfer Successful!';
+             button.style.background = "linear-gradient(135deg, #10b981, #34d399)";
+
+             // Show transaction ID alert after delay
+             setTimeout(() => {
+               alert(
+                 `Transfer completed successfully!\nTransaction ID: TXN${Math.random()
+                   .toString(36)
+                   .substr(2, 9)
+                   .toUpperCase()}`
+               );
+
+               // Reset form after delay
+               setTimeout(() => {
+                 button.disabled = false;
+                 this.reset();
+                 button.innerHTML = '<span class="icon">🚀</span> Transfer Funds';
+                 button.style.background = "linear-gradient(135deg, #a855f7, #e879f9)";
+                 container.classList.remove("success");
+               }, 2000);
+             }, 500);
+           }, 2000);
+         });
+          //

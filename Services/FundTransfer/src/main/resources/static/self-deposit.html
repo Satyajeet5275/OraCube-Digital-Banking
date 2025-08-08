@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Self Deposit - Bank Transfer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b5cf6 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: white;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      position: relative;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #a855f7, #e879f9);
+      border-radius: 16px;
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      color: white;
+      font-size: 16px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #a855f7;
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3);
+      transform: translateY(-2px);
+    }
+
+    button.submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #a855f7, #e879f9);
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    button.submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(168, 85, 247, 0.5);
+    }
+
+    button.submit-btn:active {
+      transform: translateY(-1px);
+    }
+
+    button.submit-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    button.submit-btn:hover::before {
+      left: 100%;
+    }
+
+    .success-message {
+      margin-top: 20px;
+      padding: 16px;
+      background: rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      color: #10b981;
+      font-weight: 600;
+      font-size: 16px;
+      display: none;
+      animation: successPulse 0.6s ease-out;
+    }
+
+    @keyframes successPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .back-link {
+      margin-top: 30px;
+      display: inline-block;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .back-link:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo">💳</div>
+    <h1>Self Deposit</h1>
+    <p class="subtitle">Deposit funds securely into your account</p>
+
+    <form id="selfDepositForm">
+      <div class="form-group">
+        <label for="accountNumber">Account Number</label>
+        <input
+          type="number"
+          id="accountNumber"
+          name="accountNumber"
+          placeholder="Enter your account number"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Amount ($)</label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          placeholder="Enter amount"
+          step="0.01"
+          min="1"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="remarks">Remarks (optional)</label>
+        <input
+          type="text"
+          id="remarks"
+          name="remarks"
+          placeholder="e.g. Depositing test amount"
+          maxlength="100"
+        />
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Deposit</button>
+    </form>
+
+    <div class="success-message" id="successMessage"></div>
+
+    <a href="index.html" class="back-link" aria-label="Back to Transaction Type Selection">
+      ← Back to transaction selection
+    </a>
+  </div>
+
+  <script>
+    document.getElementById("selfDepositForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const accountNumber = document.getElementById("accountNumber").value.trim();
+      const amount = parseFloat(document.getElementById("amount").value);
+      const remarks = document.getElementById("remarks").value.trim();
+
+      if (!accountNumber || isNaN(amount) || amount < 1) {
+        alert("Please enter a valid account number and amount.");
+        return;
+      }
+
+      const payload = {
+        accountNumber: Number(accountNumber),
+        amount: amount,
+        transactionMethod: "SELF_DEPOSIT",
+        remarks: remarks || "Self deposit"
+      };
+
+      const submitButton = e.target.querySelector("button[type='submit']");
+      const successMessage = document.getElementById("successMessage");
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Processing...";
+      successMessage.style.display = "none";
+      successMessage.textContent = "";
+
+      fetch("http://localhost:8081/api/transactions/self-deposit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+      .then(response => {
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
+        return response.json();
+      })
+      .then(data => {
+        successMessage.textContent = `Deposit successful! Transaction ID: ${data.transactionId || 'N/A'}`;
+        successMessage.style.display = "block";
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Deposit";
+        e.target.reset();
+      })
+      .catch(error => {
+        alert("Error: " + error.message);
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Deposit";
+      });
+    });
+  </script>
+</body>
+</html>
